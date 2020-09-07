@@ -1,0 +1,28 @@
+<ng-container *ngIf="profile">
+  <ion-header>
+    <ion-toolbar style="text-align: center;">
+      <ion-title>Edit Hobbies</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size-md="6" offset-md="3">
+         
+          
+          <ion-card>
+           
+            <ion-item class="ion-activated" *ngFor="let hobbie of hobbies">
+              <ion-icon name="{{hobbie.icon}}" slot="start"></ion-icon>
+              <ion-label>{{hobbie.name}}</ion-label>
+              <ion-button slot="end" color="danger" (click)="deleteHobbie(hobbie.name)"><ion-icon name="trash"></ion-icon></ion-button>
+            </ion-item>
+          </ion-card>
+          <ion-button style="float: right;" (click)="addHobbie()">Add<ion-icon name="add-outline"></ion-icon></ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
+</ng-container>

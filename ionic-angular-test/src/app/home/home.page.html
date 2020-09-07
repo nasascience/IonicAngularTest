@@ -1,24 +1,75 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content *ngIf="profile != null" [fullscreen]="true">
+  <div class="masterehad">
+    <div id="container">
+      <ion-avatar>
+        <img [src]="profile.photo"/>
+      </ion-avatar>
+      <br />
+      <strong style="font-size:2.4em;">{{profile.name}} {{profile.surname}}</strong><br />
+      <span style="font-size:1.2em; color: #50c8ff">{{profile.title}}</span><br />
+      <span>{{profile.email}}</span>
+    </div>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-    <ion-button (click)="showMessage()">Show Message</ion-button>
-    <br/>
-    <span>{{text}}</span>
+  <!-- Segments -->
+  <ion-segment (ionChange)="segmentChanged($event)" color="secondary" [(ngModel)]="selSegment">
+    <ion-segment-button value="experience">
+      <ion-label>Work Experience</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="skills">
+      <ion-label>Skills</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="hobbies">
+      <ion-label>Hobbies</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!-- Segments Content -->
+  <div [ngSwitch]="selSegment">
+    <!-- WORK EXPERIENCE -->
+    <div *ngSwitchCase="'experience'">
+      <ion-grid>
+        <ion-row class>
+          <ion-col size-md="6" offset-md="3">
+            <ion-card *ngFor="let experience of profile.workExperience">
+              <ion-card-header>
+                <ion-card-title>{{experience.title}}</ion-card-title>
+                <ion-card-subtitle style="color:white;">{{experience.subtitle}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+               {{experience.content}}
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <!-- SKILLS -->
+    <div *ngSwitchCase="'skills'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-md="6" offset-md="3">
+            <ion-chip *ngFor="let skill of profile.skills">
+              <ion-label>{{skill}}</ion-label>
+              <!-- <ion-icon name="close-circle"></ion-icon> -->
+            </ion-chip>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <!-- HOBBIES -->
+    <div *ngSwitchCase="'hobbies'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size-md="6" offset-md="3">
+            <ion-card>
+              <ion-item class="ion-activated" *ngFor="let hobbie of profile.hobbies">
+                <ion-icon name="{{hobbie.icon}}" slot="start"></ion-icon>
+                <ion-label>{{hobbie.name}}</ion-label>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
   </div>
 </ion-content>
